@@ -1,0 +1,19 @@
+# Ignore unnecessary files
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+*.swp
+*.swo
+*~
+.DS_Store
+.git
+.gitignore
+.vscode
+.idea
+node_modules
+vendor/*
+!vendor/modules.txt
