@@ -11,7 +11,7 @@ import (
 	"MailWork/MailWork-UI/assets"
 	"MailWork/MailWork-UI/config"
 	"MailWork/MailWork-UI/web"
-	comcfg "MailWork/MailWork/config"
+	comcfg "MailWork/config"
 	"MailWork/http"
 )
 

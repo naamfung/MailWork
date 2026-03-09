@@ -3,6 +3,9 @@ module MailWork
 go 1.25.0
 
 require (
+	MailWork/data v0.0.0
+	MailWork/smtp v0.0.0
+	MailWork/storage v0.0.0
 	github.com/gorilla/pat v1.0.2
 	github.com/gorilla/websocket v1.5.3
 	github.com/ian-kent/envconf v0.0.0-20141026121121-c19809918c02
@@ -12,6 +15,12 @@ require (
 	github.com/smartystreets/goconvey v1.8.1
 	github.com/spf13/pflag v1.0.5
 	golang.org/x/crypto v0.48.0
+)
+
+replace (
+	MailWork/data => ./data
+	MailWork/smtp => ./smtp
+	MailWork/storage => ./storage
 )
 
 require (
@@ -26,4 +35,7 @@ require (
 	github.com/stretchr/testify v1.11.1 // indirect
 	github.com/t-k/fluent-logger-golang v1.0.0 // indirect
 	github.com/tinylib/msgp v1.6.3 // indirect
+	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
+	gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22 // indirect
+	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
