@@ -1,12 +1,12 @@
 #!/bin/sh
 
-# 构建和部署 MailHog Docker 容器的脚本
+# 构建和部署 MailWork Docker 容器的脚本
 
 # 镜像名称
-IMAGE_NAME="naamfung/mailhog"
+IMAGE_NAME="naamfung/mailwork"
 
 # 容器名称
-CONTAINER_NAME="mailhog"
+CONTAINER_NAME="mailwork"
 
 # 端口映射
 SMTP_PORT=1025

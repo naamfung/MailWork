@@ -1,7 +1,7 @@
-MailHog data library [![GoDoc](https://godoc.org/github.com/mailhog/data?status.svg)](https://godoc.org/github.com/mailhog/data) [![Build Status](https://travis-ci.org/mailhog/data.svg?branch=master)](https://travis-ci.org/mailhog/data)
+MailWork data library [![GoDoc](https://godoc.org/MailWork/data?status.svg)](https://godoc.org/MailWork/data) [![Build Status](https://travis-ci.org/mailwork/data.svg?branch=master)](https://travis-ci.org/mailwork/data)
 =========
 
-`github.com/mailhog/data` implements a data library
+`MailWork/data` implements a data library
 
 ### Licence
 

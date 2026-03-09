@@ -1,6 +1,6 @@
 package storage
 
-import "github.com/naamfung/data"
+import "MailWork/data"
 
 // Storage represents a storage backend
 type Storage interface {

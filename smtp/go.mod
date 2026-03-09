@@ -1,3 +1,3 @@
-module github.com/naamfung/smtp
+module MailWork/smtp
 
 go 1.22.0

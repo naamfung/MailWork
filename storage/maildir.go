@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/naamfung/data"
+	"MailWork/data"
 )
 
 // Maildir is a maildir storage backend
@@ -19,7 +19,7 @@ type Maildir struct {
 // CreateMaildir creates a new maildir storage backend
 func CreateMaildir(path string) *Maildir {
 	if len(path) == 0 {
-		dir, err := ioutil.TempDir("", "mailhog")
+		dir, err := ioutil.TempDir("", "mailwork")
 		if err != nil {
 			panic(err)
 		}
@@ -146,7 +146,7 @@ func (maildir *Maildir) List(start, limit int) (*data.Messages, error) {
 		}
 		msg := data.FromBytes(b)
 		// FIXME domain
-		m := *msg.Parse("mailhog.example")
+		m := *msg.Parse("mailwork.example")
 		m.ID = data.MessageID(fileinfo.Name())
 		m.Created = fileinfo.ModTime()
 		messages = append(messages, m)
@@ -178,7 +178,7 @@ func (maildir *Maildir) Load(id string) (*data.Message, error) {
 		return nil, err
 	}
 	// FIXME domain
-	m := data.FromBytes(b).Parse("mailhog.example")
+	m := data.FromBytes(b).Parse("mailwork.example")
 	m.ID = data.MessageID(id)
 	return m, nil
 }

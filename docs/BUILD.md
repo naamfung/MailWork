@@ -1,11 +1,11 @@
-Building MailHog
+Building MailWork
 ================
 
-MailHog can be built using the provided build scripts.
+MailWork can be built using the provided build scripts.
 
 ### Using build scripts
 
-If you aren't making any code changes, you can build MailHog using the provided scripts:
+If you aren't making any code changes, you can build MailWork using the provided scripts:
 
 - **Linux/macOS:**
   ```bash
@@ -16,7 +16,7 @@ If you aren't making any code changes, you can build MailHog using the provided 
   build.bat
   ```
 
-This will generate an executable named `mailhog` (or `mailhog.exe` on Windows) in the current directory.
+This will generate an executable named `mailwork` (or `mailwork.exe` on Windows) in the current directory.
 
 ### Using the comprehensive build script
 
@@ -38,11 +38,11 @@ For more control over the build process, you can use the comprehensive build scr
 
 ### Why do I need build scripts?
 
-MailHog has HTML, CSS and Javascript assets which need to be converted
+MailWork has HTML, CSS and Javascript assets which need to be converted
 to a go source file using [go-bindata](https://github.com/jteeuwen/go-bindata).
 
 This must happen before running `go build` or `go install` to avoid compilation
-errors (e.g., `no buildable Go source files in MailHog-UI/assets`).
+errors (e.g., `no buildable Go source files in MailWork-UI/assets`).
 
 ### go generate
 

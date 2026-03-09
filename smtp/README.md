@@ -1,7 +1,7 @@
-MailHog SMTP Protocol [![GoDoc](https://godoc.org/github.com/mailhog/smtp?status.svg)](https://godoc.org/github.com/mailhog/smtp) [![Build Status](https://travis-ci.org/mailhog/smtp.svg?branch=master)](https://travis-ci.org/mailhog/smtp)
+MailWork SMTP Protocol [![GoDoc](https://godoc.org/MailWork/smtp?status.svg)](https://godoc.org/MailWork/smtp) [![Build Status](https://travis-ci.org/mailwork/smtp.svg?branch=master)](https://travis-ci.org/mailwork/smtp)
 =========
 
-`github.com/mailhog/smtp` implements an SMTP server state machine.
+`MailWork/smtp` implements an SMTP server state machine.
 
 It attempts to encapsulate as much of the SMTP protocol (plus its extensions) as possible
 without compromising configurability or requiring specific backend implementations.
@@ -19,7 +19,7 @@ reply = proto.ProcessCommand("EHLO localhost")
 // ...
 ```
 
-See [MailHog-Server](https://github.com/mailhog/MailHog-Server) and [MailHog-MTA](https://github.com/mailhog/MailHog-MTA) for example implementations.
+See [MailWork-Server](https://MailWork/MailWork-Server) and [MailWork-MTA](https://MailWork-MTA) for example implementations.
 
 ### Commands and replies
 
@@ -66,7 +66,7 @@ reply = proto.ProcessData("Test\r\n.\r\n")
 
 The state machine provides hooks to manipulate its behaviour.
 
-See [![GoDoc](https://godoc.org/github.com/mailhog/smtp?status.svg)](https://godoc.org/github.com/mailhog/smtp) for more information.
+See [![GoDoc](https://godoc.org/MailWork/smtp?status.svg)](https://godoc.org/MailWork/smtp) for more information.
 
 | Hook                               | Description
 | ---------------------------------- | -----------
@@ -83,7 +83,7 @@ See [![GoDoc](https://godoc.org/github.com/mailhog/smtp?status.svg)](https://god
 
 The state machine also exports variables to control its behaviour:
 
-See [![GoDoc](https://godoc.org/github.com/mailhog/smtp?status.svg)](https://godoc.org/github.com/mailhog/smtp) for more information.
+See [![GoDoc](https://godoc.org/MailWork/smtp?status.svg)](https://godoc.org/MailWork/smtp) for more information.
 
 | Variable               | Description
 | ---------------------- | -----------

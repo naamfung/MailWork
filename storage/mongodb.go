@@ -3,7 +3,7 @@ package storage
 import (
 	"log"
 
-	"github.com/naamfung/data"
+	"MailWork/data"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )

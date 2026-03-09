@@ -1,7 +1,7 @@
-MailHog HTTP utilities [![GoDoc](https://godoc.org/github.com/mailhog/http?status.svg)](https://godoc.org/github.com/mailhog/http) [![Build Status](https://travis-ci.org/mailhog/http.svg?branch=master)](https://travis-ci.org/mailhog/http)
+MailWork HTTP utilities [![GoDoc](https://godoc.org/MailWork/http?status.svg)](https://godoc.org/MailWork/http) [![Build Status](https://travis-ci.org/mailwork/http.svg?branch=master)](https://travis-ci.org/mailwork/http)
 =========
 
-`github.com/mailhog/http` provides HTTP utilities used by MailHog-UI and MailHog-Server.
+`MailWork/http` provides HTTP utilities used by MailWork-UI and MailWork-Server.
 
 ### Licence
 

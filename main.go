@@ -9,16 +9,16 @@ import (
 
 	"github.com/gorilla/pat"
 	"github.com/ian-kent/go-log/log"
-	"github.com/naamfung/MailHog-Server/api"
-	cfgapi "github.com/naamfung/MailHog-Server/config"
-	"github.com/naamfung/MailHog-Server/imap"
-	"github.com/naamfung/MailHog-Server/smtp"
-	"github.com/naamfung/MailHog-UI/assets"
-	cfgui "github.com/naamfung/MailHog-UI/config"
-	"github.com/naamfung/MailHog-UI/web"
-	cfgcom "github.com/naamfung/MailHog/config"
-	"github.com/naamfung/http"
-	"github.com/naamfung/mhsendmail/cmd"
+	"MailWork/MailWork-Server/api"
+	cfgapi "MailWork/MailWork-Server/config"
+	"MailWork/MailWork-Server/imap"
+	"MailWork/MailWork-Server/smtp"
+	"MailWork/MailWork-UI/assets"
+	cfgui "MailWork/MailWork-UI/config"
+	"MailWork/MailWork-UI/web"
+	cfgcom "MailWork/config"
+	"MailWork/http"
+	"MailWork/mhsendmail/cmd"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -43,7 +43,7 @@ func configure() {
 
 func main() {
 	if len(os.Args) > 1 && (os.Args[1] == "-version" || os.Args[1] == "--version") {
-		fmt.Println("MailHog version: " + version)
+		fmt.Println("MailWork version: " + version)
 		os.Exit(0)
 	}
 

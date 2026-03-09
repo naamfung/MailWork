@@ -9,7 +9,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/naamfung/data"
+	"MailWork/data"
 )
 
 // Command is a struct representing an SMTP command (verb + arguments)
@@ -101,8 +101,8 @@ type Protocol struct {
 // handler is called when a message is received and should return a message ID
 func NewProtocol() *Protocol {
 	p := &Protocol{
-		Hostname:          "mailhog.example",
-		Ident:             "ESMTP MailHog",
+		Hostname:          "mailwork.example",
+		Ident:             "ESMTP MailWork",
 		State:             INVALID,
 		MaximumLineLength: -1,
 		MaximumRecipients: -1,

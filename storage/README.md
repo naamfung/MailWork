@@ -1,7 +1,7 @@
-MailHog storage backends [![GoDoc](https://godoc.org/github.com/mailhog/storage?status.svg)](https://godoc.org/github.com/mailhog/storage) [![Build Status](https://travis-ci.org/mailhog/storage.svg?branch=master)](https://travis-ci.org/mailhog/storage)
+MailWork storage backends [![GoDoc](https://godoc.org/MailWork/storage?status.svg)](https://godoc.org/MailWork/storage) [![Build Status](https://travis-ci.org/mailwork/storage.svg?branch=master)](https://travis-ci.org/mailwork/storage)
 =========
 
-`github.com/mailhog/storage` implements MailHog storage backends:
+`MailWork/storage` implements MailWork storage backends:
 
   * In-memory
   * MongoDB

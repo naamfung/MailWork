@@ -61,7 +61,7 @@ release() {
     for PLATFORM in $PLATFORMS; do
         OS=$(echo $PLATFORM | cut -d'/' -f1)
         ARCH=$(echo $PLATFORM | cut -d'/' -f2)
-        OUTPUT="build/MailHog_${OS}_${ARCH}"
+        OUTPUT="build/MailWork_${OS}_${ARCH}"
         if [ "$OS" = "windows" ]; then
             OUTPUT="${OUTPUT}.exe"
         fi

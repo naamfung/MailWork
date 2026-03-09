@@ -5,7 +5,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/naamfung/data"
+	"MailWork/data"
 )
 
 // InMemory is an in memory storage backend

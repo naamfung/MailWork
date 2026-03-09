@@ -13,7 +13,7 @@ import (
 
 import flag "github.com/spf13/pflag"
 
-// Go runs the MailHog sendmail replacement.
+// Go runs the MailWork sendmail replacement.
 func Go() {
 	host, err := os.Hostname()
 	if err != nil {
