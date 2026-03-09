@@ -596,10 +596,60 @@ mailhogApp.controller('MailCtrl', function ($scope, $http, $sce, $timeout) {
 
   $scope.deleteOne = function(message) {
     var e = $scope.startEvent("Deleting message", message.ID, "glyphicon-remove");
-  	$http.delete($scope.host + 'api/v1/messages/' + message.ID).success(function() {
-  		if($scope.preview._id == message._id) $scope.preview = null;
-  		$scope.refresh();
+	$http.delete($scope.host + 'api/v1/messages/' + message.ID).success(function() {
+		if($scope.preview._id == message._id) $scope.preview = null;
+		$scope.refresh();
       e.done();
-  	});
+	});
+  }
+
+  $scope.replyMessage = function(message) {
+    $scope.replying = message;
+    // 设置回复的收件人
+    $scope.replyTo = $scope.tryDecodeMime(message.Content.Headers["From"][0] || message.From.Mailbox + "@" + message.From.Domain);
+    // 设置回复的主题
+    $scope.replySubject = "Re: " + $scope.tryDecodeMime(message.Content.Headers["Subject"][0]);
+    // 设置回复的内容
+    $scope.replyBody = "\n\n--- Original message ---\nFrom: " + $scope.replyTo + "\nSubject: " + $scope.tryDecodeMime(message.Content.Headers["Subject"][0]) + "\n\n" + $scope.getMessagePlain(message);
+    $('#reply-message').modal('show');
+  }
+
+  $scope.sendReply = function() {
+    $('#reply-message').modal('hide');
+    var message = $scope.replying;
+    $scope.replying = null;
+
+    var e = $scope.startEvent("Sending reply", message.ID, "glyphicon-send");
+
+    // 构建回复邮件数据
+    var replyData = {
+      From: {
+        Mailbox: "mailwork",
+        Domain: "local"
+      },
+      To: [{
+        Mailbox: message.From.Mailbox,
+        Domain: message.From.Domain
+      }],
+      Content: {
+        Headers: {
+          "From": ["MailWork <mailwork@local>"],
+          "To": [$scope.replyTo],
+          "Subject": [$scope.replySubject],
+          "Content-Type": ["text/plain; charset=utf-8"],
+          "Content-Transfer-Encoding": ["quoted-printable"]
+        },
+        Body: $scope.replyBody
+      }
+    };
+
+    // 发送回复邮件
+    $http.post($scope.host + 'api/v1/messages', replyData).success(function() {
+      e.done();
+      $scope.refresh();
+    }).error(function(err) {
+      e.fail();
+      e.error = err;
+    });
   }
 });

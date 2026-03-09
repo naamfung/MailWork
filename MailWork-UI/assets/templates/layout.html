@@ -29,17 +29,17 @@
             <div class="form-group left-inner-addon">
               <i class="glyphicon glyphicon-search"></i>
 
-              <input ng-model="searchText" type="text" ng-key-enter="search('containing', searchText)" class="form-control" autocomplete="off" placeholder="Search" id="search" ng-focus="keepopen=true" ng-click="$event.stopPropagation()">
+              <input ng-model="searchText" type="text" ng-key-enter="search('containing', searchText)" class="form-control" autocomplete="off" placeholder="搜索" id="search" ng-focus="keepopen=true" ng-click="$event.stopPropagation()">
 
               <div class="list-group" ng-if="searchText.length > 0 && keepopen">
                 <a href="#" ng-click="search('containing', searchText)" class="list-group-item">
-                  Find messages <strong>containing</strong> {{ searchText }}
+                  查找包含 <strong>{{ searchText }}</strong> 的邮件
                 </a>
                 <a href="#" ng-click="search('to', searchText)" class="list-group-item">
-                  Find messages <strong>to</strong> {{ searchText }}
+                  查找发送给 <strong>{{ searchText }}</strong> 的邮件
                 </a>
                 <a href="#" ng-click="search('from', searchText);" class="list-group-item">
-                  Find messages <strong>from</strong> {{ searchText }}
+                  查找来自 <strong>{{ searchText }}</strong> 的邮件
                 </a>
               </div>
             </div>
@@ -61,22 +61,22 @@
         <div class="col-md-2 col-sm-3">
           <ul class="nav nav-pills nav-stacked">
             <li>
-              <a href="#" title="Event stream connected" ng-click="toggleStream()">
+              <a href="#" title="事件流已连接" ng-click="toggleStream()">
                 <span class="glyphicon glyphicon-off {{ hasEventSource ? 'has-event-source' : 'no-event-source' }}"></span>
-                {{ hasEventSource ? 'Connected' : 'Disconnected' }}
+                {{ hasEventSource ? '已连接' : '未连接' }}
               </a>
             </li>
 
             <li>
               <a href="#" ng-click="backToInboxFirst()">
-                Inbox ({{totalMessages}})
+                收件箱 ({{totalMessages}})
               </a>
             </li>
 
             <li>
               <a href="#" ng-click="deleteAll()">
                 <span class="glyphicon glyphicon-remove-circle"></span>
-                Delete all messages
+                删除所有邮件
               </a>
             </li>
           </ul>
@@ -84,50 +84,86 @@
           <div class="well jim-well">
             <h3>Jim</h3>
             <p>
-              Jim is a chaos monkey.<br>
-              <a href="https://github.com/mailhog/MailHog/blob/master/docs/JIM.md" target="_blank">Find out more at GitHub</a>.
+              Jim 是一个混沌猴子。
             </p>
             <div ng-if="jim">
-              <a href="#" ng-click="disableJim()" class="btn btn-xs btn-danger">Disable Jim</a>
+              <a href="#" ng-click="disableJim()" class="btn btn-xs btn-danger">禁用 Jim</a>
             </div>
             <div ng-if="jim" class="jim-config">
               <div class="jim-config-item">
-                <strong>Accept chance</strong>
+                <strong>接受连接概率</strong>
                 <span>{{ jim.AcceptChance * 100 }}%</span>
               </div>
               <div class="jim-config-item">
-                <strong>Disconnect chance</strong>
+                <strong>断开连接概率</strong>
                 <span>{{ jim.DisconnectChance * 100 }}%</span>
               </div>
               <div class="jim-config-item">
-                <strong>Link speed affect chance</strong>
+                <strong>影响链路速度概率</strong>
                 <span>{{ jim.LinkSpeedAffect * 100}}%</span>
               </div>
               <div class="jim-config-item">
-                <strong>Link speed minimum</strong>
+                <strong>最小链路速度</strong>
                 <span>{{ jim.LinkSpeedMin }}kbps</span>
               </div>
               <div class="jim-config-item">
-                <strong>Link speed maximum</strong>
+                <strong>最大链路速度</strong>
                 <span>{{ jim.LinkSpeedMax }}kbps</span>
               </div>
               <div class="jim-config-item">
-                <strong>Reject sender chance</strong>
+                <strong>拒绝发件人概率</strong>
                 <span>{{ jim.RejectSenderChance * 100 }}%</span>
               </div>
               <div class="jim-config-item">
-                <strong>Reject recipient chance</strong>
+                <strong>拒绝收件人概率</strong>
                 <span>{{ jim.RejectRecipientChance * 100 }}%</span>
               </div>
               <div class="jim-config-item">
-                <strong>Reject auth chance</strong>
+                <strong>拒绝认证概率</strong>
                 <span>{{ jim.RejectAuthChance * 100 }}%</span>
               </div>
             </div>
             <div ng-if="!jim">
-              <a href="#" ng-click="enableJim()" class="btn btn-xs btn-default">Enable Jim</a>
+              <a href="#" ng-click="enableJim()" class="btn btn-xs btn-default">启用 Jim</a>
             </div>
           </div>
+
+          <div class="well jim-well">
+            <h3>服务设置</h3>
+            <p class="text-muted">邮件客户端连接设置：</p>
+            <div class="jim-config">
+              <div class="jim-config-item">
+                <strong>SMTP 服务器</strong>
+                <span class="pull-right" id="smtp-server">localhost:1025</span>
+              </div>
+              <div class="jim-config-item">
+                <strong>IMAP 服务器</strong>
+                <span class="pull-right" id="imap-server">localhost:143</span>
+              </div>
+              <div class="jim-config-item">
+                <strong>Web 界面</strong>
+                <span class="pull-right" id="web-interface-url">http://localhost:8025</span>
+              </div>
+              <div class="jim-config-item">
+                <strong>认证</strong>
+                <span class="pull-right">无需认证</span>
+              </div>
+            </div>
+          </div>
+          <script>
+            // 获取当前页面的 URL
+            var currentUrl = window.location.href;
+            // 更新 Web 界面地址
+            document.getElementById('web-interface-url').textContent = currentUrl;
+            
+            // 从 URL 中提取主机名
+            var url = new URL(currentUrl);
+            var hostname = url.hostname;
+            
+            // 更新 SMTP 和 IMAP 服务器地址
+            document.getElementById('smtp-server').textContent = hostname + ':1025';
+            document.getElementById('imap-server').textContent = hostname + ':143';
+          </script>
         </div>
 
         <div class="col-md-10 col-sm-9 content">

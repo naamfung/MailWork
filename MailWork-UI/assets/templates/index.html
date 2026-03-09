@@ -1,5 +1,5 @@
 <div class="toolbar" ng-if="!preview && !searching">
-  <button class="btn btn-default" ng-click="refresh()" title="Refresh">
+  <button class="btn btn-default" ng-click="refresh()" title="刷新">
     <i class="glyphicon glyphicon-refresh"></i>
   </button>
 
@@ -13,15 +13,15 @@
         <option value="100">100</option>
       </select>
       <strong>{{ startMessages + 1 }}-{{ startMessages + countMessages }}</strong>
-      of
+      共
       <strong>{{ totalMessages }}</strong>
     </span>
 
-    <button class="btn btn-default" ng-click="showNewer()" title="Newer" ng-class="{'disabled':startMessages<=0}">
+    <button class="btn btn-default" ng-click="showNewer()" title="较新" ng-class="{'disabled':startMessages<=0}">
       <i class="glyphicon glyphicon-chevron-left"></i>
     </button>
 
-    <button class="btn btn-default" ng-click="showOlder()" title="Older" ng-class="{'disabled':startMessages+countMessages>=totalMessages}">
+    <button class="btn btn-default" ng-click="showOlder()" title="较旧" ng-class="{'disabled':startMessages+countMessages>=totalMessages}">
       <i class="glyphicon glyphicon-chevron-right"></i>
     </button>
   </span>
@@ -78,16 +78,16 @@
     </button>
   </span>
 
-  <button class="btn btn-default" ng-click="backToInbox()" title="Back to Inbox">
+  <button class="btn btn-default" ng-click="backToInbox()" title="返回收件箱">
     <i class="glyphicon glyphicon-arrow-left"></i>
   </button>
-  <button class="btn btn-default" ng-click="refresh()" title="Refresh">
+  <button class="btn btn-default" ng-click="refresh()" title="刷新">
     <i class="glyphicon glyphicon-refresh"></i>
   </button>
 
   <div class="spacer"></div>
 
-  <span>Searching for messages <strong>{{searchKind}}</strong> {{ searchedText }}</span>
+  <span>正在搜索 <strong>{{searchKind}}</strong> {{ searchedText }} 的邮件</span>
 </div>
 
 <div class="messages container-fluid" ng-if="searching">
@@ -119,22 +119,26 @@
 </div>
 
 <div class="toolbar" ng-if="preview">
-  <button class="btn btn-default" ng-click="backToInbox()" title="Back to Inbox">
+  <button class="btn btn-default" ng-click="backToInbox()" title="返回收件箱">
     <i class="glyphicon glyphicon-arrow-left"></i>
   </button>
 
   <div class="spacer"></div>
 
-  <button class="btn btn-default" ng-click="deleteOne(preview); preview = null">
+  <button class="btn btn-default" ng-click="deleteOne(preview); preview = null" title="删除">
     <i class="glyphicon glyphicon-trash"></i>
   </button>
 
-  <a class="btn btn-default" title="Download" href="{{ host }}api/v1/messages/{{ preview.ID }}/download">
+  <a class="btn btn-default" title="下载" href="{{ host }}api/v1/messages/{{ preview.ID }}/download">
     <i class="glyphicon glyphicon-save"></i>
   </a>
 
-  <button class="btn btn-default" title="Release" ng-click="releaseOne(preview)">
+  <button class="btn btn-default" title="释放" ng-click="releaseOne(preview)">
     <i class="glyphicon glyphicon-share"></i>
+  </button>
+
+  <button class="btn btn-default" title="回复" ng-click="replyMessage(preview)">
+    <i class="glyphicon glyphicon-reply"></i>
   </button>
 </div>
 
@@ -144,15 +148,15 @@
       <table>
         <tbody ng-if="!previewAllHeaders">
           <tr>
-            <th>From</th>
+            <th>发件人</th>
             <td>{{ tryDecodeMime(preview.Content.Headers["From"][0] || preview.From.Mailbox + "@" + preview.From.Domain) }}</td>
           </tr>
           <tr>
-            <th>Subject</th>
+            <th>主题</th>
             <td><strong>{{ tryDecodeMime(preview.Content.Headers["Subject"][0]) }}</strong></td>
           </tr>
           <tr>
-            <th>To</th>
+            <th>收件人</th>
             <td>
               {{ tryDecodeMime((preview.Content.Headers["To"] || []).join(', ') || preview.To[0].Mailbox + "@" + preview.To[0].Domain) }}
             </td>
@@ -170,11 +174,11 @@
     </div>
     <div class="col-md-2">
       <button id="hide-headers" ng-if="previewAllHeaders" ng-click="toggleHeaders(false)" type="button" class="btn btn-default pull-right btn-xs">
-        Hide headers <i class="glyphicon glyphicon-chevron-up"></i>
+        隐藏头信息 <i class="glyphicon glyphicon-chevron-up"></i>
       </button>
 
       <button id="show-headers" ng-if="!previewAllHeaders" ng-click="toggleHeaders(true)" type="button" class="btn btn-default pull-right btn-xs">
-        Show headers <i class="glyphicon glyphicon-chevron-down"></i>
+        显示头信息 <i class="glyphicon glyphicon-chevron-down"></i>
       </button>
     </div>
   </div>
@@ -182,8 +186,8 @@
   <div class="mail-content">
     <ul class="nav nav-tabs">
       <li ng-if="hasHTML(preview)" ng-class="{ active: hasHTML(preview) }"><a href="#preview-html" data-toggle="tab">HTML</a></li>
-      <li ng-class="{ active: !hasHTML(preview) }"><a href="#preview-plain" data-toggle="tab">Plain text</a></li>
-      <li><a href="#preview-source" data-toggle="tab">Source</a></li>
+      <li ng-class="{ active: !hasHTML(preview) }"><a href="#preview-plain" data-toggle="tab">纯文本</a></li>
+      <li><a href="#preview-source" data-toggle="tab">源代码</a></li>
       <li ng-if="preview.MIME"><a href="#preview-mime" data-toggle="tab">MIME</a></li>
     </ul>
 
@@ -195,29 +199,29 @@
         <div ng-repeat="part in preview.MIME.Parts" class="mime-part">
           <a href="{{ host }}api/v1/messages/{{ preview.ID }}/mime/part/{{ $index }}/download" type="button" class="btn btn-default btn-sm">
             <i class="glyphicon glyphicon-save"></i>
-            Download
+            下载
           </a>
-          {{ tryDecodeMime(part.Headers["Content-Type"][0] || "Unknown type") }} ({{ part.Size }} bytes)
+          {{ tryDecodeMime(part.Headers["Content-Type"][0] || "未知类型") }} ({{ part.Size }} 字节)
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modals -->
+<!-- 模态框 -->
 <div class="modal fade" id="confirm-delete-all">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Delete all messages?</h4>
+        <h4 class="modal-title">删除所有邮件？</h4>
       </div>
       <div class="modal-body">
-        <p>Are you sure you want to delete all messages?</p>
+        <p>你确定要删除所有邮件吗？</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" ng-click="deleteAllConfirm()">Delete all messages</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-danger" ng-click="deleteAllConfirm()">删除所有邮件</button>
       </div>
     </div>
   </div>
@@ -228,15 +232,15 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Release message</h4>
+        <h4 class="modal-title">释放邮件</h4>
       </div>
       <div class="modal-body">
-        <p>To release this message, select an SMTP server or enter custom settings:</p>
+        <p>要释放此邮件，请选择一个 SMTP 服务器或输入自定义设置：</p>
         <form role="form">
           <div class="form-group">
             <select ng-model="selectedOutgoingSMTP" id="release-message-outgoing" class="form-control">
               <option value="{{ s.Name }}" ng-repeat="s in outgoingSMTP">{{ s.Name }}</option>
-              <option value="">Use custom settings</option>
+              <option value="">使用自定义设置</option>
             </select>
           </div>
           <div ng-if="selectedOutgoingSMTP == ''">
@@ -244,50 +248,81 @@
               <div class="checkbox">
                 <label for="release-message-save">
                   <input ng-model="saveSMTPServer" type="checkbox" id="release-message-save">
-                  Save these settings
+                  保存这些设置
                 </label>
               </div>
             </div>
             <div class="form-group" ng-if="saveSMTPServer">
-              <label for="release-message-server-name">Server name</label>
+              <label for="release-message-server-name">服务器名称</label>
               <input type="text" autofocus class="form-control" id="release-message-server-name">
             </div>
           </div>
           <div class="form-group">
-            <label for="release-message-email">Email address</label>
+            <label for="release-message-email">邮箱地址</label>
             <input type="email" autofocus class="form-control" id="release-message-email" placeholder="someone@example.com">
           </div>
           <div ng-if="selectedOutgoingSMTP == ''">
             <div class="form-group">
-              <label for="release-message-smtp-host">SMTP server</label>
+              <label for="release-message-smtp-host">SMTP 服务器</label>
               <input type="text" class="form-control" id="release-message-smtp-host" placeholder="mail.example.com">
             </div>
             <div class="form-group">
-              <label for="release-message-smtp-port">SMTP port</label>
+              <label for="release-message-smtp-port">SMTP 端口</label>
               <input type="number" class="form-control" id="release-message-smtp-port" value="25">
             </div>
             <div class="form-group">
-              <label for="release-message-smtp-username">Authentication</label>
+              <label for="release-message-smtp-username">认证方式</label>
               <select ng-model="smtpmech" id="release-message-smtp-mechanism" class="form-control">
-                <option selected value="NONE">None</option>
+                <option selected value="NONE">无</option>
                 <option value="PLAIN">PLAIN</option>
                 <option value="CRAMMD5">CRAM-MD5</option>
               </select>
             </div>
             <div class="form-group" ng-if="smtpmech != 'NONE'">
-              <label for="release-message-smtp-username">Username</label>
+              <label for="release-message-smtp-username">用户名</label>
               <input type="text" class="form-control" id="release-message-smtp-username" value="">
             </div>
             <div class="form-group" ng-if="smtpmech != 'NONE'">
-              <label for="release-message-smtp-password">{{ smtpmech == 'CRAMMD5' ? "Secret" : "Password" }}</label>
+              <label for="release-message-smtp-password">{{ smtpmech == 'CRAMMD5' ? "密钥" : "密码" }}</label>
               <input type="password" class="form-control" id="release-message-smtp-password" value="">
             </div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" ng-click="confirmReleaseMessage()">Release message</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-danger" ng-click="confirmReleaseMessage()">释放邮件</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="reply-message">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">回复邮件</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form">
+          <div class="form-group">
+            <label for="reply-to">收件人</label>
+            <input type="email" class="form-control" id="reply-to" ng-model="replyTo" readonly>
+          </div>
+          <div class="form-group">
+            <label for="reply-subject">主题</label>
+            <input type="text" class="form-control" id="reply-subject" ng-model="replySubject">
+          </div>
+          <div class="form-group">
+            <label for="reply-body">消息</label>
+            <textarea class="form-control" id="reply-body" ng-model="replyBody" rows="10"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" ng-click="sendReply()">发送回复</button>
       </div>
     </div>
   </div>
