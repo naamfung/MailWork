@@ -35,9 +35,24 @@ fmt() {
     fi
 }
 
+# 生成assets.go文件
+generate_assets() {
+    echo "生成assets.go文件..."
+    rm -rf MailWork-UI/assets/assets.go
+    # 直接使用 go-bindata 命令，因为在 PowerShell 环境中路径已经正确设置
+    cd MailWork-UI && go-bindata -pkg=assets -o assets/assets.go assets/... && cd ..
+    if [ $? -eq 0 ]; then
+        echo "assets.go文件生成成功！"
+    else
+        echo "assets.go文件生成失败，请检查错误信息。"
+        exit 1
+    fi
+}
+
 # 安装项目
 install() {
     echo "安装项目..."
+    generate_assets
     go install .
     if [ $? -eq 0 ]; then
         echo "项目安装成功！"
@@ -50,6 +65,9 @@ install() {
 # 构建跨平台发布版本
 release() {
     echo "构建跨平台发布版本..."
+    
+    # 生成assets.go文件
+    generate_assets
     
     # 创建构建目录
     mkdir -p build

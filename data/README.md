@@ -1,4 +1,4 @@
-MailWork data library [![GoDoc](https://godoc.org/MailWork/data?status.svg)](https://godoc.org/MailWork/data) [![Build Status](https://travis-ci.org/mailwork/data.svg?branch=master)](https://travis-ci.org/mailwork/data)
+MailWork data library
 =========
 
 `MailWork/data` implements a data library
